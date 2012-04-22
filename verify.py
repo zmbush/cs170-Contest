@@ -3,24 +3,29 @@ import graph
 import sys
 import copy
 
+import networkx as nx
+
 debugging = False
 
 def verify(g, solution):
   if debugging: print "Copying graph"
   gcop = copy.deepcopy(g)
+  touched = set()
   for index in solution:
     if debugging: print "Removing node:",index
-    gcop = graph.removeNode(gcop, index)
-  if not gcop.graphEmpty():
+    touched.add(index)
+    touched.update(gcop.neighbors(index))
+    gcop.remove_node(index)
+  if len(touched) != len(g.nodes()):
     if debugging: print "Not Valid"
     return False
   if debugging: print "Determining if solution is connected"
-  nextPossible = g[solution[0]]
+  nextPossible = set(g.neighbors(solution[0]))
   for index in solution[1:]:
     if index not in nextPossible:
       if debugging: print "Not Valid"
       return False
-    nextPossible.update(g[index])
+    nextPossible.update(g.neighbors(index))
   if debugging: print "Valid"
   return True
 
@@ -29,7 +34,9 @@ if __name__ == "__main__":
   if len(sys.argv) <= 1:
     print "You must specify an input file"
   else:
-    g = graph.Graph(sys.argv[1] + '.adjlist')
-    solution = solver.solve(g)
+    G = nx.read_adjlist(sys.argv[1] + '.adjlist')
+    solution = solver.solve(G)
+    #g = graph.Graph(sys.argv[1] + '.adjlist')
+    #solution = solver.solve(g)
     if solution != None:
-      verify(g, solution)
+      verify(G, solution)
