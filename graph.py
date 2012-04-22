@@ -48,6 +48,9 @@ class Graph:
   def __setitem__(self, i, value):
     self.graph[i] = value
 
+  def __len__(self):
+    return len(self.graph)
+
 def loadGraph(filename):
   f = open(filename)
   graph = {}
