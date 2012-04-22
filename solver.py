@@ -4,18 +4,20 @@ import copy
 
 debugging = False
 
-def solve(g, heuristic=len):
+def solve(g, heuristic=lambda g, node: len(g[node]), alg="greedy"):
+  return eval(alg)(g, heuristic)
+
+def greedy(g, heuristic):
   if debugging: print "Graph input:",g
   g = copy.deepcopy(g)
   ans = []
   bestChoice = -1
   bestScore = -1
-  i = 0
-  for adjacent in g:
-    if heuristic(adjacent) > bestScore:
-      bestChoice = i
-      bestScore = heuristic(adjacent)
-    i += 1
+  for node in range(len(g)):
+    h = heuristic(g, node)
+    if h > bestScore:
+      bestChoice = node
+      bestScore = h
 
   if debugging: print "chosing node:", bestChoice
   possibleNextChoices = g[bestChoice]
@@ -31,9 +33,10 @@ def solve(g, heuristic=len):
     if len(possibleNextChoices) == 0:
       return None
     for choice in possibleNextChoices:
-      if heuristic(g[choice]) > bestScore:
+      h = heuristic(g, choice)
+      if h > bestScore:
         bestChoice = choice
-        bestScore = heuristic(g[choice])
+        bestScore = h
 
     if debugging: print "chosing node:",bestChoice
     possibleNextChoices.remove(bestChoice)
