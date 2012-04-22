@@ -1,0 +1,4 @@
+#!/bin/bash
+python graphToDot.py $1
+circo $1.dot -Tpng -o $1.png
+xdg-open $1.png

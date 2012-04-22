@@ -9,7 +9,7 @@ def nullHeuristic(g, node):
 def lenHeuristic(g, node):
   return len(g[node])
 
-def heu(g, node):
+def oracleHeuristic(g, node):
   # print "Evaluating for node:",node
   adjacent = g[node]
   score = len(adjacent)
@@ -29,11 +29,12 @@ if __name__ == "__main__":
   if len(sys.argv) <= 1:
     print "Input graph required"
   else:
-    heur = "heu"
+    heur = "oracle"
     if len(sys.argv) > 2:
       heur = sys.argv[2]
     g = Graph(sys.argv[1] + ".adjlist")
-    solution = solve(g, heuristic=eval(heur), alg="greedy")
+    print "Solving", sys.argv[1], "with", heur+"Heuristic"
+    solution = solve(g, heuristic=eval(heur + "Heuristic"), alg="greedy")
     print "Size of solution:",len(solution)
     print "Solution:",solution
     if verify(g, solution):
