@@ -4,17 +4,17 @@ import copy
 
 debugging = False
 
-def solve(g):
+def solve(g, heuristic=len):
   if debugging: print "Graph input:",g
   g = copy.deepcopy(g)
   ans = []
   bestChoice = -1
-  bestLen = -1
+  bestScore = -1
   i = 0
   for adjacent in g:
-    if len(adjacent) > bestLen:
+    if heuristic(adjacent) > bestScore:
       bestChoice = i
-      bestLen = len(adjacent)
+      bestScore = heuristic(adjacent)
     i += 1
 
   if debugging: print "chosing node:", bestChoice
@@ -27,13 +27,13 @@ def solve(g):
 
   while not g.graphEmpty():
     bestChoice = -1
-    bestLen = -1
+    bestScore = -1
     if len(possibleNextChoices) == 0:
       return None
     for choice in possibleNextChoices:
-      if len(g[choice]) > bestLen:
+      if heuristic(g[choice]) > bestScore:
         bestChoice = choice
-        bestLen = len(g[choice])
+        bestScore = heuristic(g[choice])
 
     if debugging: print "chosing node:",bestChoice
     possibleNextChoices.remove(bestChoice)
