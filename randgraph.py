@@ -18,19 +18,3 @@ else:
   print degree
   G = nx.fast_gnp_random_graph(nodes, degree)
   nx.write_adjlist(G, fname) 
-  """
-  graph = []
-  for n in range(nodes):
-    node = []
-    for edge in range(degree):
-      while True:
-        val = random.randrange(nodes)
-        if val != n and val not in node:
-          if val > n or n not in graph[val]:
-            node.append(val)
-            break
-    graph.append(node)
-  
-  for i in range(nodes):
-    print i,' '.join(str(x) for x in graph[i])
-  """

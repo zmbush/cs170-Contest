@@ -5,7 +5,8 @@ import networkx as nx
 
 debugging = False
 
-def solve(g, heuristic=lambda g, node: len(g.neighbors(node)), alg="greedy"):
+def solve(g, heuristic=lambda g, node, touched: len([n for n in
+                         g.neighbors(node) if n not in touched]), alg="greedy"):
   return eval(alg)(g, heuristic)
 
 def greedy(g, heuristic):
@@ -17,7 +18,7 @@ def greedy(g, heuristic):
   bestChoice = -1
   bestScore = -1
   for node in g.nodes():
-    h = heuristic(g, node)
+    h = heuristic(g, node, touched)
     if h > bestScore:
       bestChoice = node
       bestScore = h
@@ -39,10 +40,16 @@ def greedy(g, heuristic):
     if len(possibleNextChoices) == 0:
       return None
     for choice in possibleNextChoices:
-      h = heuristic(g, choice)
-      if h > bestScore:
+      h = heuristic(g, choice, touched)
+      if h > bestScore and choice not in touched: 
         bestChoice = choice
         bestScore = h
+    if bestChoice == -1:
+      for choice in possibleNextChoices:
+        h = heuristic(g, choice, touched)
+        if h > bestScore:
+          bestChoice = choice
+          bestScore = h
 
     if debugging: print "chosing node:",bestChoice
     possibleNextChoices.remove(bestChoice)
@@ -54,6 +61,7 @@ def greedy(g, heuristic):
     if debugging: print "connected next choices:",possibleNextChoices
 
     g.remove_node(bestChoice)
+
     if debugging: print "Graph after removing choice:",g.nodes()
   return ans
 
