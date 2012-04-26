@@ -1,7 +1,7 @@
-import solver
-import graph
-import sys
 import copy
+import graph
+import solver
+import sys
 
 import networkx as nx
 
@@ -36,7 +36,5 @@ if __name__ == "__main__":
   else:
     G = nx.read_adjlist(sys.argv[1] + '.adjlist')
     solution = solver.solve(G)
-    #g = graph.Graph(sys.argv[1] + '.adjlist')
-    #solution = solver.solve(g)
     if solution != None:
       verify(G, solution)
