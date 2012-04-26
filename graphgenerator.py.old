@@ -1,0 +1,55 @@
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+
+__author__="Nathan Rockenbach"
+__date__ ="$Apr 22, 2012 11:03:59 PM$"
+
+import random
+if __name__ == "__main__":
+    edgeList = {}
+    for i in range(0,100):
+        edgeList[i] = []
+    for i in range(0, 19):
+        edgeList[i].append(19)
+    random.seed( )
+    for _ in range(0, 75):
+        start = random.randint(1,19)
+        end = random.randint(1,19)
+        if start is not end and not(start in edgeList[end]) and not(end in edgeList[start]):
+            edgeList[start].append(end)
+    for i in range(20,44):
+        edgeList[i].append(i + 1)
+    edgeList[44].append(20)
+    edgeList[22].append(45)
+    edgeList[22].append(48)
+    
+    edgeList[45].append(46)
+    edgeList[45].append(47)
+    edgeList[45].append(48)
+    edgeList[45].append(49)
+    edgeList[45].append(50)
+    edgeList[48].append(46)
+    edgeList[48].append(47)
+    edgeList[48].append(51)
+    edgeList[51].append(49)
+    edgeList[51].append(50)
+    i = 52
+    while i < 81:
+        edgeList[i - 1].append(i)
+        edgeList[i - 1].append(i + 3)
+        edgeList[i].append(i + 1)
+        edgeList[i].append(i + 2)
+        edgeList[i].append(i + 3)
+        edgeList[i].append(i + 4)
+        edgeList[i].append(i + 5)
+        edgeList[i + 3].append(i + 1)
+        edgeList[i + 3].append(i + 2)
+        edgeList[i + 3].append(i + 6)
+        edgeList[i + 6].append(i + 4)
+        edgeList[i + 6].append(i + 5)
+        i += 7
+    edgeList[8].append(25)
+    
+    
+    for i in range(0,81):
+        print(str(i) + " " + ' '.join(str(j) for j in edgeList[i]))
