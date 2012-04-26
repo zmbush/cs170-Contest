@@ -34,7 +34,7 @@ if __name__ == "__main__":
   if len(sys.argv) <= 1:
     print "You must specify an input file"
   else:
-    G = nx.read_adjlist(sys.argv[1] + '.adjlist')
+    G = nx.read_adjlist('graphs/' + sys.argv[1] + '.adjlist')
     solution = solver.solve(G)
     if solution != None:
       verify(G, solution)

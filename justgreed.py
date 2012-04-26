@@ -39,7 +39,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 2:
       heur = sys.argv[2]
     """Read Graph in"""
-    g = nx.read_adjlist(sys.argv[1] + '.adjlist')
+    g = nx.read_adjlist('graphs/' + sys.argv[1] + '.adjlist')
     print "Solving", sys.argv[1], "with", heur+"Heuristic"
 
     """Solve For Graph with greedy algorithm"""

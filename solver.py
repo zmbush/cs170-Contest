@@ -115,5 +115,5 @@ if __name__ == "__main__":
     print G.nodes()
     print G.edges()
     print solve(G)
-    g = graph.Graph(sys.argv[1] + '.adjlist')
+    g = graph.Graph('graphs/' + sys.argv[1] + '.adjlist')
     print solve(g, alg="greedyold", heuristic=lambda g, node: len(g[node]))
