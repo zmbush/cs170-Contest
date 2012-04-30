@@ -25,6 +25,8 @@ def greedy(g, heuristic):
 
   if debugging: print "chosing node:", bestChoice
   possibleNextChoices = set(g.neighbors(bestChoice))
+  if bestChoice in possibleNextChoices:
+    possibleNextChoices.remove(bestChoice)
   if debugging: print "connected next choices:",possibleNextChoices
   ans.append(bestChoice)
   touched.add(bestChoice)
@@ -52,12 +54,13 @@ def greedy(g, heuristic):
           bestScore = h
 
     if debugging: print "chosing node:",bestChoice
-    possibleNextChoices.remove(bestChoice)
     ans.append(bestChoice)
     touched.add(bestChoice)
     touched.update(g.neighbors(bestChoice))
     if debugging: print "Nodes touched so far:",touched
     possibleNextChoices.update(g.neighbors(bestChoice))
+    if bestChoice in possibleNextChoices:
+      possibleNextChoices.remove(bestChoice)
     if debugging: print "connected next choices:",possibleNextChoices
 
     g.remove_node(bestChoice)
@@ -111,7 +114,7 @@ if __name__ == "__main__":
   if len(sys.argv) <= 1:
     print "You must specify an input file"
   else:
-    G = nx.read_adjlist(sys.argv[1] + '.adjlist')
+    G = nx.read_adjlist('graphs/' + sys.argv[1] + '.adjlist')
     print G.nodes()
     print G.edges()
     print solve(G)
