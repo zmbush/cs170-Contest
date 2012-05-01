@@ -14,7 +14,7 @@ if __name__ == "__main__":
     sys.exit(1)
   heur = "oracle"
 
-  output = file("hw13_4", 'w')
+  output = file("all.sols", 'w')
 
   if len(sys.argv) > 2:
     heur = sys.argv[2]
@@ -37,7 +37,7 @@ if __name__ == "__main__":
       print " => Solution:",' '.join(solution)    
       print >> output, f, " ".join(solution)
     else:
-      print >> output, f
+      print >> output, f, 'disconnected'
       print " => No Solution!"
 
 
